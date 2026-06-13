@@ -5,7 +5,7 @@ async fn main() {
     println!("shroomd starting...");
 
     let j1 = tokio::spawn(async {
-        job::run_process("ydotoold", "true", &[]).await;
+        job::run_process("ydotoold", "sudo", &["ydotoold"]).await;
     });
 
     let j2 = tokio::spawn(async {
