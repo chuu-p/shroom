@@ -1,4 +1,5 @@
 mod job;
+mod receiver;
 
 #[tokio::main]
 async fn main() {
@@ -9,7 +10,7 @@ async fn main() {
     });
 
     let j2 = tokio::spawn(async {
-        job::run_process("receiver", "true", &[]).await;
+        job::run_loop("receiver", receiver::run).await;
     });
 
     let j3 = tokio::spawn(async {
