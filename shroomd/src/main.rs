@@ -14,7 +14,17 @@ async fn main() {
     });
 
     let j3 = tokio::spawn(async {
-        job::run_process("remote", "true", &[]).await;
+        job::run_process(
+            "remote",
+            "ssh",
+            &[
+                "-R",
+                "9999:localhost:5000",
+                "100.100.204.26",
+                "evtest /dev/input/event3 | nc localhost 9999",
+            ],
+        )
+        .await;
     });
 
     let _ = tokio::join!(j1, j2, j3);
