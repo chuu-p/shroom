@@ -1,5 +1,7 @@
 # shroom
 
+idea pi encoding, takes a chunk and stores 5he index of digits in pi sequence like 364848-364888
+
 i am running sxmo postmarketos on a oneplus 5t
 
 many features are working out of the box but some are not working.

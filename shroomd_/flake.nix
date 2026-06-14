@@ -25,9 +25,7 @@
 
         # For `nix develop`:
         devShell = pkgs.mkShell {
-          nativeBuildInputs = with pkgs; [ pkg-config rustc cargo rustfmt mold ];
-          buildInputs = with pkgs; [ openssl gtk3 webkitgtk_4_1 glib-networking xdotool ];
-          RUSTFLAGS = "-C link-arg=-fuse-ld=mold";
+          nativeBuildInputs = with pkgs; [ rustc cargo ];
         };
       }
     );

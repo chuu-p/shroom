@@ -1,0 +1,21 @@
+// proto/services.proto
+syntax = "proto3";
+
+package shroom;
+
+service Shroom {
+  // send key (code, on/off)
+  // stream keys
+  // health check
+  // get status
+    rpc SayHello (HelloRequest) returns (HelloResponse);
+}
+
+message HelloRequest {
+    string name = 1;
+}
+
+message HelloResponse {
+    string message = 1;
+}
+
