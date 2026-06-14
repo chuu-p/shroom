@@ -1,21 +1,35 @@
-// proto/services.proto
 syntax = "proto3";
 
 package shroom;
 
+import "google/protobuf/empty.proto";
+
+enum KeyState {
+  KEY_OFF = 0;
+  KEY_ON = 1;
+}
+
+message KeyEvent {
+  string key_code = 1;
+  KeyState state = 2;
+}
+
+message HealthCheckRequest {}
+
+message HealthCheckResponse {
+  bool healthy = 1;
+}
+
+message StatusRequest {}
+
+message StatusResponse {
+  string status = 1;
+}
+
 service Shroom {
-  // send key (code, on/off)
-  // stream keys
-  // health check
-  // get status
-    rpc SayHello (HelloRequest) returns (HelloResponse);
-}
-
-message HelloRequest {
-    string name = 1;
-}
-
-message HelloResponse {
-    string message = 1;
+  rpc SendKey(KeyEvent) returns (google.protobuf.Empty);
+  rpc StreamKeys(stream KeyEvent) returns (google.protobuf.Empty);
+  rpc HealthCheck(HealthCheckRequest) returns (HealthCheckResponse);
+  rpc GetStatus(StatusRequest) returns (StatusResponse);
 }
 
