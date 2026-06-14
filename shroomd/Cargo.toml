@@ -3,9 +3,24 @@ name = "shroomd"
 version = "0.1.0"
 edition = "2024"
 
+[lib]
+name = "shroomd"
+path = "src/lib.rs"
+
+[[bin]]
+name = "shroomd-server"
+path = "src/bin/server.rs"
+
+[[bin]]
+name = "shroomd-client"
+path = "src/bin/client.rs"
+
 [dependencies]
 prost = "0.14.4"
+prost-types = "0.14.4"
 tonic = "0.14.6"
+tonic-prost = "0.14.6"
+tokio = { version = "1", features = ["rt-multi-thread", "macros", "time"] }
 
 [build-dependencies]
 tonic-prost-build = "0.14.6"
