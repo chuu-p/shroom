@@ -9,7 +9,7 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
 
     let address = env::var("CLIENT_ADDRESS")?;
     let port = env::var("CLIENT_PORT")?;
-    let url = format!("https://{}:{}", address, port);
+    let url = format!("http://{}:{}", address, port);
 
     let mut client = ShroomClient::connect(url).await?;
     let response = client.health_check(HealthCheckRequest {}).await?;

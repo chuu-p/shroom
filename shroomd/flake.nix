@@ -60,7 +60,6 @@
         // lib.optionalAttrs (system == "x86_64-linux") {
           shroomd-client-rpi = naersk'.buildPackage {
             src = ./.;
-            cargoBuildOptions = old: old ++ [ "--bin" "shroomd-client" ];
             nativeBuildInputs = with pkgs; [ protobuf pkgs.pkgsCross.aarch64-multiplatform-musl.stdenv.cc ];
             PROTOC = "${pkgs.protobuf}/bin/protoc";
             PROTOC_INCLUDE = "${pkgs.protobuf}/include";

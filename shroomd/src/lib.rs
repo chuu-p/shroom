@@ -29,8 +29,15 @@ impl Shroom for ShroomService {
 
     async fn health_check(
         &self,
-        _request: Request<HealthCheckRequest>,
+        request: Request<HealthCheckRequest>,
     ) -> Result<Response<HealthCheckResponse>, Status> {
+        if let Some(client_addr) = request.remote_addr() {
+            println!("Incoming request from client IP: {}", client_addr.ip());
+            println!("Client port: {}", client_addr.port());
+        } else {
+            println!("Could not determine client remote address.");
+        }
+
         Ok(Response::new(HealthCheckResponse { healthy: true }))
     }
 
