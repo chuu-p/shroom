@@ -5,7 +5,7 @@ use shroomd::proto::HealthCheckRequest;
 
 #[tokio::main]
 async fn main() -> Result<(), Box<dyn std::error::Error>> {
-    dotenvy::dotenv().expect("Failed to read .env file");
+    dotenvy::dotenv().ok();
 
     let address = env::var("CLIENT_ADDRESS")?;
     let port = env::var("CLIENT_PORT")?;
