@@ -2,10 +2,10 @@ use std::env;
 
 #[tokio::main]
 async fn main() -> Result<(), Box<dyn std::error::Error>> {
-    let port: u16 = env::args()
-        .nth(1)
-        .and_then(|s| s.parse().ok())
-        .unwrap_or(50051);
+    dotenvy::dotenv().expect("Failed to read .env file");
 
-    shroomd::run_server(port).await
+    let address = env::var("SERVER_ADDRESS")?;
+    let port = env::var("SERVER_PORT")?.parse()?;
+
+    shroomd::run_server(address, port).await
 }

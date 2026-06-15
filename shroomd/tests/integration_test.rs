@@ -17,7 +17,7 @@ async fn health_check_works() {
     let port = free_port();
 
     tokio::spawn(async move {
-        shroomd::run_server(port).await.unwrap();
+        shroomd::run_server("127.0.0.1".to_string(), port).await.unwrap();
     });
 
     tokio::time::sleep(Duration::from_millis(200)).await;

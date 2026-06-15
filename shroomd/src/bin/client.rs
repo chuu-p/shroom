@@ -5,11 +5,13 @@ use shroomd::proto::HealthCheckRequest;
 
 #[tokio::main]
 async fn main() -> Result<(), Box<dyn std::error::Error>> {
-    let addr = env::args()
-        .nth(1)
-        .unwrap_or_else(|| "http://0.0.0.0:50051".to_string());
+    dotenvy::dotenv().expect("Failed to read .env file");
 
-    let mut client = ShroomClient::connect(addr).await?;
+    let address = env::var("CLIENT_ADDRESS")?;
+    let port = env::var("CLIENT_PORT")?;
+    let url = format!("https://{}:{}", address, port);
+
+    let mut client = ShroomClient::connect(url).await?;
     let response = client.health_check(HealthCheckRequest {}).await?;
     println!("{}", response.get_ref().healthy);
     Ok(())

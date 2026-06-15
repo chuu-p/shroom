@@ -42,8 +42,8 @@ impl Shroom for ShroomService {
     }
 }
 
-pub async fn run_server(port: u16) -> Result<(), Box<dyn std::error::Error>> {
-    let addr = format!("0.0.0.0:{}", port).parse()?;
+pub async fn run_server(address: String, port: u16) -> Result<(), Box<dyn std::error::Error>> {
+    let addr = format!("{}:{}", address, port).parse()?;
     let service = ShroomService::default();
 
     tonic::transport::Server::builder()
