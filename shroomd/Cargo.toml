@@ -15,12 +15,17 @@ path = "src/bin/server.rs"
 name = "shroomd-client"
 path = "src/bin/client.rs"
 
+[[bin]]
+name = "shroomd-client-steam-keys"
+path = "src/bin/client-steam-keys.rs"
+
 [dependencies]
 prost = "0.14.4"
 prost-types = "0.14.4"
 tonic = "0.14.6"
 tonic-prost = "0.14.6"
 tokio = { version = "1", features = ["rt-multi-thread", "macros", "time"] }
+tokio-stream = "0.1"
 dotenvy = "0.15.7"
 evdev = "0.13.2"
 

@@ -3,9 +3,11 @@ pub mod proto {
 }
 
 use proto::{
-    shroom_server::{Shroom, ShroomServer},
     HealthCheckRequest, HealthCheckResponse, KeyEvent, StatusRequest, StatusResponse,
+    shroom_server::{Shroom, ShroomServer},
 };
+use std::process::Command;
+use tokio_stream::StreamExt;
 use tonic::{Request, Response, Status};
 
 #[derive(Default)]
@@ -13,18 +15,33 @@ pub struct ShroomService;
 
 #[tonic::async_trait]
 impl Shroom for ShroomService {
-    async fn send_key(
-        &self,
-        _request: Request<KeyEvent>,
-    ) -> Result<Response<()>, Status> {
-        Err(Status::unimplemented("not implemented"))
+    async fn send_key(&self, request: Request<KeyEvent>) -> Result<Response<()>, Status> {
+        let event = request.into_inner();
+        let state = if event.state == 1 { "ON" } else { "OFF" };
+        println!("Key: {} {} (unary)", event.key_code, state);
+        Ok(Response::new(()))
     }
 
     async fn stream_keys(
         &self,
-        _request: Request<tonic::Streaming<KeyEvent>>,
+        request: Request<tonic::Streaming<KeyEvent>>,
     ) -> Result<Response<()>, Status> {
-        Err(Status::unimplemented("not implemented"))
+        let mut stream = request.into_inner();
+        while let Some(event) = stream.next().await {
+            let event = event?;
+            let state = if event.state == 1 { "ON" } else { "OFF" };
+            println!("Key: {} {}", event.key_code, state);
+            let key_str = format!("{}:{}", event.key_code, event.state);
+            let type_status = Command::new("ydotool")
+                .args(["key", &key_str])
+                .status()
+                .expect("Failed to execute ydotool");
+
+            if !type_status.success() {
+                eprintln!("Error: Ensure ydotoold is running and your user has permissions.");
+            }
+        }
+        Ok(Response::new(()))
     }
 
     async fn health_check(

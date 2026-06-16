@@ -2,8 +2,8 @@ use std::net::TcpListener;
 use std::process::Command;
 use std::time::Duration;
 
-use shroomd::proto::shroom_client::ShroomClient;
 use shroomd::proto::HealthCheckRequest;
+use shroomd::proto::shroom_client::ShroomClient;
 
 fn free_port() -> u16 {
     let listener = TcpListener::bind("127.0.0.1:0").unwrap();
@@ -17,7 +17,9 @@ async fn health_check_works() {
     let port = free_port();
 
     tokio::spawn(async move {
-        shroomd::run_server("127.0.0.1".to_string(), port).await.unwrap();
+        shroomd::run_server("127.0.0.1".to_string(), port)
+            .await
+            .unwrap();
     });
 
     tokio::time::sleep(Duration::from_millis(200)).await;
