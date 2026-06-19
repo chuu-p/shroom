@@ -29,7 +29,7 @@ import kotlinx.coroutines.withContext
 import shroom.ShroomService.HealthCheckRequest
 import shroom.ShroomGrpcKt
 
-private const val SERVER_ADDRESS = "0.0.0.0"
+private const val SERVER_ADDRESS = "10.0.2.2"
 private const val SERVER_PORT = 7102
 
 class MainActivity : ComponentActivity() {
